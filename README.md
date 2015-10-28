@@ -1,2 +1,2 @@
-# sandeepbhat.github.com
-My personal site
+## My Blog
+More of a scribble pad for my thoughts and ideas.
