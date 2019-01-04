@@ -1,2 +1,0 @@
-# Sandeep Bhat's Personal Site
-This repository has contents of my personal site. The site is built using **Beautiful Jekyll**. If you are interested, you can check out a demo [here](http://deanattali.com/beautiful-jekyll). If you are looking for more details, [check out](https://github.com/daattali/beautiful-jekyll) the jekyll theme created and maintained by [@daattali](https://github.com/daattali).
