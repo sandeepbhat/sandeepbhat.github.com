@@ -1,0 +1,33 @@
+# Site settings ...
+uri: sandeepbhat.github.io
+url: https://sandeepbhat.github.io
+name: Sandeep Bhat
+title: System Developer
+email:
+author: Sandeep Bhat
+baseurl: 
+keywords: "Software Development, Automotive Software, Linux, QNX, Embedded Systems"
+description: >
+  I am Sandeep Bhat. Automotive system developer based out of Gothenburg, Sweden. 
+  I code for a living. Passionate about embedded systems, software design and software architecture. 
+  Autonomous cars are one of my new interests. 
+  Huge fan of Zeppelin and craft beer :)
+social_username:
+  github: sandeepbhat
+  twitter: sandeepabhat
+  linkedin: sandeepabhat
+
+# Build settings ...
+sass:
+  style: compressed
+markdown: kramdown
+encoding: "utf-8"
+paginate: 5
+permalink: /post/:title
+paginate_path: "/page/:num/"
+
+# Plugins ...
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jemoji
