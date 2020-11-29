@@ -1,31 +1,619 @@
----
-layout: default
----
-      <div class="home">
-        <div class="content-col-wrapper">
-          <div class="content-col">
-            <div class="dummy">
-              <b><span class="big">Hi!</span></b> {{ site.description }}
-              <br><br>
-              <div class="dummy blogpost">
-                ✍ <b><span class="big">Writings</span></b>
-              </div>
-            </div><p></p><p></p>
-              <ul class="post-list">{% for post in paginator.posts %}
-                <li class="titlepost">
-                  <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-                </li>
-                <li class="datepost">
-                  <span class="post-meta">{{ post.date | date: "%-d %b %Y" }}</span>
-                </li>{% endfor %}
-              </ul>
-          </div>
-        </div>{% if paginator.previous_page %}
-          <a href="{{ paginator.previous_page_path }}">
-            <b><span class="big">Balik Lagi</span></b>
-          </a>{% else %}{% endif %}{% if paginator.next_page %}
-          <a href="{{ paginator.next_page_path }}">
-            <b><span class="big">Lanjut</span></b>
-          </a>{% else %}{% endif %}
-        {% include nav.html %}
-      </div>
+<!doctype html>
+<html>
+	<head>
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimal-ui">
+	
+	<title>Sandeep Bhat</title>
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/2.0.2/octicons.min.css">
+	
+	<style type="text/css">
+	@import url(
+	https://fonts.googleapis.com/css?family=Lato:400,700
+);
+body {
+	background: #fff;
+	font-family: Lato, sans-serif;
+	margin: 0 0 80px;
+}
+a {
+	color: #2ecc71;
+}
+a:focus,
+a:hover {
+	color: #f1c40f;
+	text-decoration: none;
+}
+p {
+	line-height: 1.5;
+	margin: 0;
+}
+p + p {
+	margin-top: 10px;
+}
+h1,
+h2,
+h3,
+h4 {
+	margin-top: 0
+}
+section {
+	margin-top: 30px;
+}
+li {
+	line-height: 1.8;
+	list-style: none;
+}
+li:before {
+	content: "\f052";
+	float: left;
+	font: 13px Octicons;
+	margin-top: 6px;
+	margin-left: -20px;
+	opacity: .1;
+	position: absolute;
+}
+blockquote {
+	border-left: 5px solid #e7e9ec;
+	font-size: 14px;
+}
+em {
+	color: #95a5a6;
+	font-weight: normal;
+	font-style: normal;
+}
+h4 span:first-child {
+	color: #000;
+	font-weight: bold;
+}
+.container {
+	max-width: 750px;
+	padding: 0 30px;
+}
+.col-sm-6 {
+	margin-bottom: 10px;
+}
+.col-sm-12 h4 {
+	margin-top: 12px; 
+}
+.col-sm-12 + .col-sm-12 {
+	margin-top: 30px;
+}
+#header {
+	background: #f4f6f6;
+	padding: 50px 0;
+	margin-bottom: 30px;
+}
+#header h2 {
+	color: #95a5a6;
+	font-size: 24px;
+}
+#content h3 {
+	color: #f1c40f;
+	font-size: 26px;
+	margin-top: -4px;
+}
+#content aside {
+	text-align: right;
+	padding-right: 30px;
+}
+#profiles .network {
+	text-transform: capitalize;
+}
+#work .position,
+#volunteer .position {
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+#education .area {
+	font-weight: bold;
+}
+#education .area:before {
+	content: "\f0d7";
+	font: 16px Octicons;
+	margin-right: 6px;
+}
+#education .studyType {
+	margin-left: 25px;
+}
+#awards .summary,
+#publications .summary {
+	margin-top: 8px;
+}
+#publications .website a:before {
+	content: attr(href);
+}
+
+@media (min-width: 480px) {
+	.strike-through {
+		border-top: 1px solid #f4f6f6;
+		height: 20px;
+		margin-top: 12px;
+		margin-bottom: -2px;
+		position: relative;
+	}
+	.strike-through span,
+	.strike-through a {
+		background: #fff;
+		position: absolute;
+	}
+	.strike-through span:first-child {
+		padding-right: 20px;
+		margin-top: -12px;
+	}
+	.strike-through span + span {
+		font-size: 14px;
+		margin-top: -10px;
+		padding-left: 20px;
+		right: 0;
+	}
+}
+@media (max-width: 768px) {
+	.col-sm-6:last-child {
+		margin-bottom: 0px;
+	}
+	#content aside {
+		margin-bottom: 20px;
+		padding-right: 0;
+		text-align: left;
+	}
+	#publications .website a:before {
+		content: "View publication";
+	}
+}
+@media (max-width: 480px) {
+	h1 {
+		font-size: 26px;
+	}
+	.date {
+		font-size: 14px;
+		margin-bottom: 5px;
+	}
+	.strike-through span:first-child {
+		margin-bottom: 7px;
+	}
+	.strike-through span {
+		display: block;
+	}	
+	#header {
+		margin-bottom: 10px;
+		padding: 40px 0;
+	}
+	#actions {
+		display: none;
+	}
+}
+
+	</style>
+	
+	</head>
+	<body>
+	
+	<header id="header">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-9 col-sm-push-3">
+					<h1>
+						Sandeep Bhat
+					</h1>
+					<h2>
+						Software Developer, Volvo Cars Corportation
+					</h2>
+				</div>
+			</div>
+		</div>
+	</header>
+	<div id="content" class="container">
+
+	<section id="contact" class="row">
+		<aside class="col-sm-3">
+			<h3>Contact</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+			<div class="col-sm-6">
+				<strong>Email</strong>
+				<div class="email">sandeep.anand.bhat@gmail.com</div>
+			</div>
+			<div class="col-sm-6">
+				<strong>Phone</strong>
+				<div class="phone">+46720507107</div>
+			</div>
+			<div class="col-sm-6">
+				<strong>Website</strong>
+				<div class="website">
+					<a href="https://www.linkedin.com/in/sandeepabhat">https://www.linkedin.com/in/sandeepabhat</a>
+				</div>
+			</div>
+			</div>
+		</div>
+	</section>
+	<section id="about" class="row">
+		<aside class="col-sm-3">
+			<h3>About</h3>
+		</aside>
+		<div class="col-sm-9">
+			<p>Software professional with over 11 years of experience in automotive and embedded software development under Linux and QNX platforms. A passionate and curious individual in a constant pursuit of knowledge and problem solving. Immensely interested in software and system design. Love to collaborate and work with teams across technical and geographical barriers.</p>
+		</div>
+	</section>
+	<section id="profiles" class="row">
+		<aside class="col-sm-3">
+			<h3>Profiles</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+				<div class="col-sm-6">
+					<strong class="network">
+						Github
+					</strong>
+					<div class="username">
+						<div class="url">
+							<a href="https://github.com/sandeepbhat/">sandeepbhat</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="work" class="row">
+		<aside class="col-sm-3">
+			<h3>Work</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Volvo Cars Corporation, Gothenburg, Sweden</span>
+					<span class="date">
+						2019-05-09 — current
+					</span>
+				</h4>
+				<div class="website pull-right">
+					<a href="https://www.volvocars.com/">https://www.volvocars.com/</a>
+				</div>
+				<div class="position">
+					Software Developer
+				</div>
+				<div class="summary">
+					<p>Working as the lead developer in Connectivity Platform ART for call center services. Primary responsibility is to design and develop software on Telematics ECU bsed on ICUP platform for legal and VCC eCall services. The SW module is also responsible for RoadsideAssistance (OnCall/Connect). Started at VCC as the member of the same ART but with another team responsible for GPS positioning.</p>
+				</div>
+				<h4>Highlights</h4>
+				<ul class="highlights">
+					<li class="bullet">Design and development of SW applications responsible for legal eCall and VCC eCall.</li>
+					<li class="bullet">Remedy situations during critical phases of legal certifications to ensure production is not blocked.</li>
+					<li class="bullet">Address issues from production for VCC eCall while provide upgrade paths and solutions for existing customer cars.</li>
+					<li class="bullet">Address issues from legal certification while ensuring low turn around time in order to not affect the production.</li>
+					<li class="bullet">End-to-end responsibility of securing VCC eCall/Oncall features.</li>
+					<li class="bullet">Extensive collaborations with Wireless Car and various teams of Connected Car.</li>
+					<li class="bullet">Develop interfaces and work with automation developers to increase test coverage on solution and component CI.</li>
+					<li class="bullet">Increase unit test coverage of existing code.</li>
+				</ul>
+			</div>
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Cybercom Group, Gothenburg, Sweden</span>
+					<span class="date">
+						2018-06-06 — 2019-05-08
+					</span>
+				</h4>
+				<div class="website pull-right">
+					<a href="https://www.cybercom.com/">https://www.cybercom.com/</a>
+				</div>
+				<div class="position">
+					Senior Consultant, Embedded Competence Group
+				</div>
+				<div class="summary">
+					<p>Member of the embedded competence group working as a consultant at Zenuity AB helping them in the areas of DevOps and software integration. Working on improving the existing build process and toolchain. Innovate to improve the reliability of the build process and work towards a common goal of highly automated toolchain which ensures continuous integration &amp; continuous delivery of the SW and shortens the feedback loop.</p>
+				</div>
+				<h4>Highlights</h4>
+				<ul class="highlights">
+					<li class="bullet">Continuous improvements to Python based build scripts. This helped shorten the build time and improve reliability.</li>
+					<li class="bullet">Integration of deliveries from Veoneer and releases.</li>
+					<li class="bullet">Helping out with HIL setup for test automation.</li>
+				</ul>
+			</div>
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Harman International, Bangalore, India</span>
+					<span class="date">
+						2013-12-30 — 2018-05-25
+					</span>
+				</h4>
+				<div class="website pull-right">
+					<a href="https://www.harman.com/">https://www.harman.com/</a>
+				</div>
+				<div class="position">
+					Senior Software Engineer II
+				</div>
+				<div class="summary">
+					<p>Joined the company as a SW engineer and worked my way up to Senior Engineer II which provided me with the opportunity to become the lead developer for systems team. My team was responsible for features like USB SW download, OTA, cockpit illumination, clock management and persistency management. At later stages of the projects, my team was also responsible for overall system stability, boot up performance and runtime performance.</p>
+				</div>
+				<h4>Highlights</h4>
+				<ul class="highlights">
+					<li class="bullet">Responsible for technical deliveries USB SW download, OTA, backlight illumination, clock management, persistency memory management.</li>
+					<li class="bullet">Boot up timing optimization on QNX platforms using QNX SW development platform. Involved performing kernel traces to identify bottlenecks. Coordinating across teams to address issues in various applications to improve the boot up performance. Deep dive into scheduling policies and thread priorities in order to ensure CPU starvation does not happen.</li>
+					<li class="bullet">Boot up timing optimizations on Linux platforms using lttng. This involved similar work as in the case of QNX platform of kernel tracing, scheduling policies, thread priorities and coordination across teams.</li>
+					<li class="bullet">Achieved tuner playback at 2-3s from startup was on QNX for EU OEMs. Hardware in focus had low specifications (256MB RAM, 256MB NAND flash).</li>
+					<li class="bullet">Achieved video animation playback at 1.5s from startup on Linux platform for US OEMs. Various efforts such as initramfs, custom init applications among others were used to achieve the timing.</li>
+					<li class="bullet">Setting up bare metal flashing to be used at production and at pilot factories. This involved setting up flashing scripts which can be used on freshly produced boards.</li>
+					<li class="bullet">Our project was one of the first ones to use bitbake as build system. Our team helped with a lot of firsts. For example, recipes for building. Configuring builds for producing secure production images.</li>
+					<li class="bullet">Coordinating with production and pilot factories for software delivery and handover.</li>
+					<li class="bullet">Active contributions in the areas of power management and inter processor communication.</li>
+					<li class="bullet">Active customer engagement to resolve open points in requirements, customer reported bugs and change requests to existing requirements.</li>
+					<li class="bullet">Primary responsible for customer issues on topics of power management, persistency, SW download, stability and performance.</li>
+				</ul>
+			</div>
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Pathpartner Technology Consulting, Bangalore, India</span>
+					<span class="date">
+						2011-10-10 — 2013-12-27
+					</span>
+				</h4>
+				<div class="website pull-right">
+					<a href="https://www.pathpartnertech.com/">https://www.pathpartnertech.com/</a>
+				</div>
+				<div class="position">
+					Senior Software Engineer
+				</div>
+				<div class="summary">
+					<p>Worked mostly as an individual contributor in the areas of embedded multimedia and WinCE BSP porting. Started with integration of VC1 video codec on Windows RT (Windows 8 for ARM) platform. This involved working extensively on Windows&#x27; Multimedia Foundation Framework. Later on, worked extensively on WinCE BSPs for TI ARM platforms. As the last project at the company, worked as a consultant for SlingMedia helping them integrate closed captions on their Windows desktop player.</p>
+				</div>
+				<h4>Highlights</h4>
+				<ul class="highlights">
+					<li class="bullet">Design and develop media foundation transform components for VC1 codec. This involved extensive background work on Windows Multimedia Foundation framework and optimization of the developed transform components to meet Microsoft&#x27;s predefined benchmarks.</li>
+					<li class="bullet">Design and develop interface between media transform component and hardware codec.</li>
+					<li class="bullet">Design and develop components for closed caption rendering on SlingMedia&#x27;s Windows desktop player.</li>
+					<li class="bullet">WinCE 7.0 reference BSP back porting to WinCE 6.0. The work was based on TI&#x27;s AM335x platform. This involved understanding WinCE architecture and bootloaders. Porting of touch, LCD and keypad drivers. Fixing issues with PMIC to clock CPU at 1GHz and to lower power consumption. </li>
+					<li class="bullet">Simulated XIP (Execution In Place) solution for WinCE 6.0. This involved background work on multi-XIP support on WinCE 6.0, updating bootloaders to enable support for XIP and, changing NAND driver configurations for on-demand loading.</li>
+				</ul>
+			</div>
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Spundhan Software, Belgaum, India</span>
+					<span class="date">
+						2009-09-01 — 2011-09-09
+					</span>
+				</h4>
+				<div class="website pull-right">
+					<a href=""></a>
+				</div>
+				<div class="position">
+					Software Engineer
+				</div>
+				<div class="summary">
+					<p>Worked on tools which helped with worst case execution timing analysis of C++ software for aviation industry. Main responsibility was to write requirement test cases and unit test cases for the tool&#x27;s code. On the side, I helped develop a SDK for AVR ASIC controllers which helped accelerate in-house development of various projects. The SDK provided interfaces to control various peripherals using abstract interfaces. As the last project at the company, I worked on developing a prototype for automated hydraulic systems for aircraft carriers.</p>
+				</div>
+				<h4>Highlights</h4>
+				<ul class="highlights">
+					<li class="bullet">Developing hardware abstraction layers for analog input/output, digital input/output and motion encoders.</li>
+					<li class="bullet">Developing PID (Proportional Integrated Differential) based control systems for the automated hydraulic systems.</li>
+					<li class="bullet">Design and develop a basic ORB (Object Resource Broker).</li>
+					<li class="bullet">Design and develop custom interface with Two Fish Block cipher for security.</li>
+					<li class="bullet">Developing software libraries which interfaced with external devices such as stepper motors, LCD displays, and seven-segment displays.</li>
+				</ul>
+			</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="volunteer" class="row">
+		<aside class="col-sm-3">
+			<h3>Volunteer</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>UWEZO Youth Empowerment</span>
+					<span class="date">
+						2020-04-17 — 2013-06-06
+					</span>
+				</h4>
+				<div class="website pull-right">
+					<a href="https://www.uwezoyouth.org/">https://www.uwezoyouth.org/</a>
+				</div>
+				<div class="position">
+					Volunteer
+				</div>
+				<div class="summary">
+					<p>Got in contact with Uwezo Youth Empowerment through catchafire.org. They needed recommendations on the most appropriate chat software. They also wanted their staff to be trained on how to set up and use chosen software.</p>
+				</div>
+				<h4>Highlights</h4>
+				<ul class="highlights">
+					<li class="bullet">Worked with IT manager of Uwezo Youth Empowerment to help them setup Slack as their primary communication tool.</li>
+					<li class="bullet">Provided background on Slack and how to use it.</li>
+					<li class="bullet">Tailored some aspects of the Slack to serve their needs better. For example, implementing web-hooks to automate certain aspects of Slack.</li>
+					<li class="bullet">https://www.catchafire.org/volunteer/40392/uwezo-youth-empowerment--uwezo---chat--slack--set-up---training/</li>
+				</ul>
+			</div>
+			</div>
+		</div>
+	</section>
+	
+	<section id="education" class="row">
+		<aside class="col-sm-3">
+			<h3>Education</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Visvesvaraya Technological University, India</span>
+					<span class="date">
+						2005-09-01 — 2009-06-30
+					</span>
+				</h4>
+				<div class="area">
+					Electronics &amp; Communication
+				</div>
+				<div class="studyType">
+					Bachelor of Engineering
+				</div>
+			</div>
+			</div>
+		</div>
+	</section>
+	
+	
+	
+	<section id="skills" class="row">
+		<aside class="col-sm-3">
+			<h3>Skills</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+			<div class="col-sm-6">
+				<div class="name">
+					<h4>C Programming</h4>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="name">
+					<h4>Modern C++ Programming</h4>
+				</div>
+				<ul class="keywords">
+					<li>C++11</li>
+					<li>C++14</li>
+				</ul>
+			</div>
+			<div class="col-sm-6">
+				<div class="name">
+					<h4>Operating system internals</h4>
+				</div>
+				<ul class="keywords">
+					<li>Linux</li>
+					<li>QNX</li>
+				</ul>
+			</div>
+			<div class="col-sm-6">
+				<div class="name">
+					<h4>Docker</h4>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="name">
+					<h4>Python</h4>
+				</div>
+				<ul class="keywords">
+					<li>Python3.5</li>
+					<li>Python3.6</li>
+					<li>Python3.7</li>
+				</ul>
+			</div>
+			<div class="col-sm-6">
+				<div class="name">
+					<h4>Bitbake and Yocto Linux distribution</h4>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="name">
+					<h4>Continuous Integration &amp; Delivery</h4>
+				</div>
+				<ul class="keywords">
+					<li>GoCD</li>
+					<li>Jenkins</li>
+				</ul>
+			</div>
+			<div class="col-sm-6">
+				<div class="name">
+					<h4>Git</h4>
+				</div>
+				<ul class="keywords">
+					<li>Gerrit</li>
+					<li>Gitlab</li>
+					<li>Github</li>
+					<li>Attlassian</li>
+				</ul>
+			</div>
+			<div class="col-sm-6">
+				<div class="name">
+					<h4>Agile Methodologies</h4>
+				</div>
+				<ul class="keywords">
+					<li>JIRA</li>
+					<li>Confluence</li>
+				</ul>
+			</div>
+			<div class="col-sm-6">
+				<div class="name">
+					<h4>Javascript</h4>
+				</div>
+				<ul class="keywords">
+					<li>NodeJS</li>
+				</ul>
+			</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="languages" class="row">
+		<aside class="col-sm-3">
+			<h3>Languages</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+			<div class="col-sm-6">
+				<div class="language">
+					<strong>English</strong>
+				</div>
+				<div class="fluency">
+					Professional Working Proficiency
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="language">
+					<strong>Kannada</strong>
+				</div>
+				<div class="fluency">
+					Native Speaker
+				</div>
+			</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="interests" class="row">
+		<aside class="col-sm-3">
+			<h3>Interests</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+			<div class="col-sm-6">
+				<div class="name">
+					<h4>Machine Learning</h4>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="name">
+					<h4>Urdu Poetry</h4>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="name">
+					<h4>Technology trends</h4>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="name">
+					<h4>Craft Beer</h4>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="name">
+					<h4>Indie and Classical Rock</h4>
+				</div>
+			</div>
+			</div>
+		</div>
+	</section>
+	
+
+	</div>
+	
+	</body>
+</html>
